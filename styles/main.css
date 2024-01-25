@@ -1,6 +1,6 @@
 body {
-  background-color: rgb(44, 83, 100);
-background-image: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+  background: #1c1c1c;
+  
 
 
 
@@ -89,7 +89,7 @@ cursor: pointer;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 36%;
   height: 80%;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;

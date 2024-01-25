@@ -28,7 +28,10 @@ $programs = @{
     "Chrome" = "https://github.com/Colony42/file/raw/main/ChromeSetup%20(1).exe";
     "Yandex Browser" = "https://browser.yandex.ru/download?banerid=6302000000&statpromo=true&partner_id=default";
     "TCP Optimizer" = "https://github.com/Colony42/file/raw/main/TCPOptimizer.exe";
-
+    "Kaspersky Free" = "https://github.com/Colony42/file/raw/main/kaspersky4win202121.15.8.493ru_45357.exe";
+    "Epic Launcher" = "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi?trackingId=6d576e7fe2ba49eb935e6a87c8e1d17d";
+    "Torrent Classic" = "https://github.com/Colony42/file/raw/main/utorrent_installer%20(2).exe";
+    "Planet VPN" = "https://cdn.freevpnplanet.com/win/planetvpn.exe";
 }
 
 # Download and install each program

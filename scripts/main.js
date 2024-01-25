@@ -111,15 +111,17 @@ function getProgramsForCategory(category) {
           'Telegram': 'https://telegram.org/dl/desktop/win64',
           'Chrome': 'https://github.com/Colony42/file/raw/main/ChromeSetup%20(1).exe',
           'Yandex Browser': 'https://browser.yandex.ru/download?banerid=6302000000&statpromo=true&partner_id=default',
-          
-        
+          'Kaspersky Free': 'https://github.com/Colony42/file/raw/main/kaspersky4win202121.15.8.493ru_45357.exe',
+          'LibreOffice': 'https://download.documentfoundation.org/libreoffice/stable/7.6.4/win/x86_64/LibreOffice_7.6.4_Win_x86-64.msi',
+          'Torrent Classic': 'https://github.com/Colony42/file/raw/main/utorrent_installer%20(2).exe',
+          'Planet VPN': 'https://cdn.freevpnplanet.com/win/planetvpn.exe',
+
         }; 
         break;
 
-      case 'Media':
+      case 'Custom':
         categoryPrograms = {
-          'VCL Media Player': 'https://mirror.yandex.ru/mirrors/ftp.videolan.org/vlc/3.0.20/win64/vlc-3.0.20-win64.exe',
-          'Google Picasa': 'https://picasa3.ru/wp-content/uploads/soft/picasa39-setup.exe',
+          
           
         };
         break;
@@ -147,6 +149,8 @@ function getProgramsForCategory(category) {
           'ASIO4ALL': 'https://github.com/Colony42/file/raw/main/ASIO4ALL_2_15_Russian.exe',
           'Dual Monitors Tools': 'https://github.com/Colony42/file/raw/main/DualMonitorTools-2.10.msi', 
           'TCP Optimizer': 'https://github.com/Colony42/file/raw/main/TCPOptimizer.exe',
+          'VCL Media Player': 'https://mirror.yandex.ru/mirrors/ftp.videolan.org/vlc/3.0.20/win64/vlc-3.0.20-win64.exe',
+          'Google Picasa': 'https://picasa3.ru/wp-content/uploads/soft/picasa39-setup.exe',
         };
         break;
 
@@ -154,7 +158,7 @@ function getProgramsForCategory(category) {
         categoryPrograms = {
           'Steam': 'https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe',
           'Discord': 'https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86',
-          
+          'Epic Launcher': 'https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi?trackingId=6d576e7fe2ba49eb935e6a87c8e1d17d',
         };
         break;
 
