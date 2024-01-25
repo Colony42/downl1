@@ -1,0 +1,287 @@
+body {
+  background-color: rgb(44, 83, 100);
+background-image: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+
+
+
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+
+  
+
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#startBtn {
+  width: 350px;
+  height: 200px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1f1f1f;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: Montserrat;
+      font-style: normal;
+      font-weight: bold;
+  
+background: #f0e247;
+border-radius: 16px;
+box-shadow:  5px 5px 10px #b9ae37,
+             -5px -5px 10px #ffff57;
+backdrop-filter: blur(10.3px);
+-webkit-backdrop-filter: blur(10.3px);
+border: 2px solid rgba(255, 255, 255, 0.5);
+
+cursor: pointer;
+}
+
+.rectangle {
+  width: 350px;
+  height: 200px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: Montserrat;
+      font-style: normal;
+      font-weight: bold;
+  
+background: rgba(255, 255, 255, 0.1);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(10.3px);
+-webkit-backdrop-filter: blur(10.3px);
+border: 2px solid rgba(255, 255, 255, 0.3);
+
+cursor: pointer;
+}
+
+.rectangle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2.4px solid rgba(255, 255, 255, 0.5);
+}
+
+#startBtn:hover {
+  background: #1f1f1f;
+  color: #f0e247;
+  border: 2.4px solid #ffff57;
+}
+
+.checkbox-list {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.3px);
+  -webkit-backdrop-filter: blur(10.3px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 999;
+  font-size: 20px;
+  font-family: Montserrat;
+      font-style: normal;
+      font-weight: bold;
+}
+
+.checkbox-item {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-family: Montserrat;
+      font-style: normal;
+      font-weight: bold;
+      
+}
+
+.checkbox-label {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  
+}
+
+.cart-button {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.cart-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2.4px solid rgba(255, 255, 255, 0.5);
+}
+
+.btn_close {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: #e62222;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.downloaded {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  width: 110px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  font-size: 17px;
+  font-family: Montserrat;
+      font-style: normal;
+      font-weight: bold;
+      cursor: pointer;
+}
+
+.cart-window {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  height: 600px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.3px);
+  -webkit-backdrop-filter: blur(10.3px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 999;
+  font-size: 20px;
+  font-family: Montserrat;
+      font-style: normal;
+      font-weight: bold;
+}
+
+.cart-window-item {
+  margin-bottom: 15px;
+  color: white;
+}
+
+
+
+
+
+
+@media (max-width: 1500px) {
+  .rectangle {
+    width: 250px;
+    height: 150px;
+    border-radius: 14px;
+    font-size: 20px;
+  }
+
+  #startBtn {
+    width: 250px;
+    height: 150px;
+    border-radius: 14px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .rectangle {
+    width: 200px;
+    height: 125px;
+    border-radius: 12px;
+    font-size: 17px;
+  }
+
+  #startBtn {
+    width: 200px;
+    height: 125px;
+    border-radius: 12px;
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 900px) {
+  .rectangle {
+    width: 200px;
+    height: 125px;
+    font-size: 17px;
+    border-radius: 14px;
+  }
+
+  .row {
+    flex-direction: column;
+ }
+
+ .cart-button {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+  #startBtn {
+    width: 200px;
+    height: 125px;
+    font-size: 17px;
+    border-radius: 14px;
+}
+}

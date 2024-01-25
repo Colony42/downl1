@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.css">
+  
+</head>
+<body>
+
+  <header>
+    <div class="row">
+      <div class="rectangle" onclick="toggleCheckboxList('Game')">Game</div>
+      <div class="rectangle" onclick="toggleCheckboxList('Development & Coding')">Dev & Coding</div>
+      <div class="rectangle" onclick="toggleCheckboxList('Media')">Media</div>
+      <div class="rectangle" onclick="toggleCheckboxList('Social media')">Social media</div>
+    </div>
+    <div class="row">
+      <div class="rectangle" onclick="toggleCheckboxList('Creation')">Creation</div>
+      <div class="rectangle" onclick="toggleCheckboxList('Business')">Business</div>
+      <div class="rectangle" onclick="toggleCheckboxList('Useful utilities')">Useful utilities</div>
+      <div class="rectangle" onclick="toggleCheckboxList('Select manually')">Select manually</div>
+    </div>
+  </header>
+
+  <div id="checkboxList" class="checkbox-list">
+    <!-- Оставляем контент пустым, будет заполнено динамически -->
+
+    <button class="btn_close" onclick="closeCheckboxList()">Close</button>
+  </div>
+
+  <div class="cart-button" onclick="showCartContent()">🛒</div>
+
+  <div id="cartWindow" class="cart-window">
+    <!-- Empty initial content, will be populated dynamically -->
+  </div>
+
+  <footer>
+   
+  </footer>
+
+<script src="/scripts/main.js"></script>
+</body>
+</html>
