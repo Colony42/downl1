@@ -234,7 +234,7 @@ async function runCustomInstaller(selectedPrograms, programs) {
   const installPath = 'C:\\Temp';
 
   // Determine the script path relative to the current module's directory
-  const scriptPath = 'http://localhost:3000/customInstaller.ps1';
+  const scriptPath = '/scripts/customInstaller.ps1';
 
 
   // Reset the programsDownloaded counter
@@ -277,7 +277,7 @@ if (insInf) {
     // Construct the PowerShell script command for each program
     const scriptCommand = `
     $installPath = "${installPath}"
-    $scriptPath = "${scriptPath.replace(/\\/g, '\\\\')}"  # Ensure backslashes are properly escaped
+    $scriptPath = "${scriptPath}"  # Ensure backslashes are properly escaped
       
       # Define the program and its download URL
       $program = @{
@@ -306,7 +306,7 @@ if (insInf) {
   }
 
     // Send the script content directly as a string
-    await fetch('http://localhost:3000/runScript', {
+    await fetch('/runScript', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
