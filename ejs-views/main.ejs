@@ -8,6 +8,8 @@
 </head>
 <body>
 
+  <div id="installInfoBanner">Installing programs...</div>
+
   <header>
     <div class="row">
       <div id="startBtn" class="rectangle" onclick="toggleCheckboxList('Start')">Start</div>
@@ -23,13 +25,19 @@
     </div>
   </header>
 
+  <div id="installInfo"></div>
+
   <progress id="downloadProgress" value="0" max="100"></progress>
 
   <div id="checkboxList" class="checkbox-list">
     <!-- Оставляем контент пустым, будет заполнено динамически -->
 
     <button class="btn_close" onclick="closeCheckboxList()">Close</button>
+    <button class="select-all-button" onclick="selectAllCheckboxes()">Select All</button>
+    
   </div>
+
+
 
   <div class="cart-button" onclick="showCartContent()">🛒</div>
 

@@ -1,3 +1,5 @@
+
+
 let programs = null;
 
 async function toggleCheckboxList(category) {
@@ -30,9 +32,10 @@ async function toggleCheckboxList(category) {
     }).join('');
 
     // Добавляем кнопку Close
-    const closeBtn = '<button class="btn_close" onclick="closeCheckboxList()">X</button>';
+    const closeBtn = '<button class="btn_close" onclick="closeCheckboxList()"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button>';
+    const selectAllBtn ='<button class="select-all-button" onclick="selectAllCheckboxes()">Select All</button>';
 
-    checkboxList.innerHTML = checkboxes + closeBtn;
+    checkboxList.innerHTML = checkboxes + closeBtn + selectAllBtn;
 
     const checkboxesElements = checkboxList.querySelectorAll('input[type="checkbox"]');
     checkboxesElements.forEach(checkbox => {
@@ -203,6 +206,7 @@ function updateCartWindow() {
 function showCartContent() {
   const cartWindow = document.getElementById('cartWindow');
   const downloadButton = '<button class="downloaded" onclick="toggleCartWindow()">Download</button>';
+  
 
   // Toggle the display of cart window
   if (cartWindow.style.display === 'block') {
@@ -222,32 +226,67 @@ function closeCheckboxList() {
   checkboxList.style.display = 'none';
 }
 
+// Add a variable to store the reference to the installInfoBanner
+let installInfoBanner = document.getElementById('installInfoBanner');
 
-function runCustomInstaller(selectedPrograms, programs) {
 
-  console.log('Selected Programs:', selectedPrograms);
-  console.log('All Programs:', programs);
+async function runCustomInstaller(selectedPrograms, programs) {
+  const installPath = 'C:\\Temp';
 
-  const installPath = prompt("Enter installation path:", 'D:\\test');
-  if (!installPath) {
-    return;
+  // Determine the script path relative to the current module's directory
+  const scriptPath = 'http://localhost:3000/customInstaller.ps1';
+
+
+  // Reset the programsDownloaded counter
+  programsDownloaded = 0;
+
+  // Update the total number of programs for progress tracking
+  const totalPrograms = selectedPrograms.length;
+
+  // Display the progress bar
+  const progressBar = document.getElementById('downloadProgress');
+  if (progressBar) {
+    progressBar.style.display = 'block';
   }
 
-  // Construct the PowerShell script command
-  const scriptCommand = `
+  const cartWindow = document.getElementById('cartWindow');
+  if (cartWindow) {
+    cartWindow.style.display = 'none';
+  }
+
+
+  // Display the progress bar
+  if (installInfoBanner) {
+    installInfoBanner.style.display = 'block';
+  }
+
+  const insInf = document.getElementById('installInfo');
+
+if (insInf) {
+  insInf.style.display = 'block';
+  }
+
+
+  // Add a delay to ensure smooth display of the progress bar
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  // Iterate through selected programs and run installation with progress updates
+  for (let i = 0; i < totalPrograms; i++) {
+    const program = selectedPrograms[i];
+
+    // Construct the PowerShell script command for each program
+    const scriptCommand = `
     $installPath = "${installPath}"
-    $scriptPath = "D:\\Prog\\customInstaller.ps1"
-    
-    # Define programs and their download URLs
-    $programs = @{
-      ${selectedPrograms.map(program => `"${program}" = "${programs[program]}"`).join(';')}
-    }
+    $scriptPath = "${scriptPath.replace(/\\/g, '\\\\')}"  # Ensure backslashes are properly escaped
+      
+      # Define the program and its download URL
+      $program = @{
+        "${program}" = "${programs[program]}"
+      }
 
-    # Download and install each program
-
-    foreach ($program in $programs.Keys) {
-      $installerPath = $programs[$program]
-      $installerFilePath = Join-Path $installPath "$program.exe"
+      # Download and install the program
+      $installerPath = $program["${program}"]
+      $installerFilePath = Join-Path $installPath "${program}.exe"
 
       # Download the installer
       Invoke-WebRequest -Uri $installerPath -OutFile $installerFilePath
@@ -257,35 +296,71 @@ function runCustomInstaller(selectedPrograms, programs) {
 
       # Remove the installer
       Remove-Item -Path $installerFilePath -Force
-    }
 
-    Write-Host "Installation complete."
-  `;
+      Write-Host "Installation of ${program} complete."
+    `;
 
-  // Send the script content directly as a string
-  fetch('http://localhost:3000/runScript', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ script: scriptCommand }),
-  })
-  .then(response => response.text())
-  .then(output => console.log(output))
-  .catch(error => console.error('Error running script:', error));
+    // Update the installInfoBanner with the current program
+  if (installInfoBanner) {
+    installInfoBanner.innerHTML = `Installing: ${program}`;
+  }
+
+    // Send the script content directly as a string
+    await fetch('http://localhost:3000/runScript', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ script: scriptCommand }),
+    })
+    .then(response => response.text())
+    .then(output => {
+      console.log(output);
+      // Update the progress after each installation
+      programsDownloaded++;
+      updateProgress(programsDownloaded, totalPrograms, program, (programsDownloaded / totalPrograms) * 100);
+
+      // Show the output in the installInfo div
+      const installInfo = document.getElementById('installInfo');
+      if (installInfo) {
+        installInfo.innerHTML = `${output}`;
+      }
+      
+    })
+    .catch(error => console.error('Error running script:', error));
+  }
+
+  // Notify that the installation is complete
+  console.log('Installation of all programs complete.');
+  
+
+  // Hide the progress bar after installation is complete
+  if (progressBar) {
+    progressBar.style.display = 'none';
+  }
+
+  if (installInfoBanner) {
+    installInfoBanner.innerHTML = `Success!`;
+  }
+
+  
+  
 }
 
 let programsDownloaded = 0;
 
 // Добавляем новую функцию для отображения прогресса
-function updateProgress(programsDownloaded, totalPrograms) {
-  // Вычисляем прогресс в процентах
-  const progress = (programsDownloaded / totalPrograms) * 100;
-
+function updateProgress(programsDownloaded, totalPrograms, currentProgram, progress) {
   // Обновляем элемент прогресса в HTML
   const progressBar = document.getElementById('downloadProgress');
   if (progressBar) {
     progressBar.value = progress;
+  }
+
+  // Обновляем элемент с информацией о программе
+  const installInfo = document.getElementById('installInfo');
+  if (installInfo) {
+    installInfo.innerHTML = `Installing: ${currentProgram} - ${progress.toFixed(2)}%`;
   }
 }
 
@@ -295,8 +370,11 @@ async function runInstallation(program, installPath) {
   const installerPath = programs[program];
   const installerFilePath = `${installPath}\\${program}.exe`;
 
+  // Выводим информацию о текущей устанавливаемой программе
+  console.log(`Installing ${program}...`);
+
   // Обновляем прогресс перед каждой установкой
-  updateProgress(programsDownloaded, checkedPrograms.length);
+  updateProgress(programsDownloaded, checkedPrograms.length, program, 0);
 
   // Download the installer
   await fetch(installerPath)
@@ -315,6 +393,21 @@ async function runInstallation(program, installPath) {
   // Install the program
   // ...
 
+  // Обновляем прогресс после завершения установки
+  updateProgress(programsDownloaded, checkedPrograms.length, program, 100);
+
+  // Выводим информацию об успешной установке программы
+  console.log(`${program} installed successfully.`);
+
   // Remove the installer
   // ...
+}
+
+function selectAllCheckboxes() {
+  const checkboxesElements = document.querySelectorAll('input[type="checkbox"]');
+  
+  checkboxesElements.forEach(checkbox => {
+    checkbox.checked = true;
+    handleCheckboxChange(checkbox);
+  });
 }

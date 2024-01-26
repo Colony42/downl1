@@ -24,30 +24,53 @@ app.get('/', (req, res) => {
   res.render(createPath('main'));
 });
 
-app.post('/runScript', (req, res) => {
+// Serve the PowerShell script
+app.get('/customInstaller.ps1', (req, res) => {
+  const scriptPath = path.join(__dirname, 'scripts', 'customInstaller.ps1');
+  res.sendFile(scriptPath);
+});
+
+app.post('/runScript', async (req, res) => {
   const script = req.body.script;
-  const scriptPath = 'tempScript.ps1';
+  const tempFolderPath = 'C:\\Temp';  // Update the temporary folder path as needed
 
   console.log('Received script:', script);
 
   try {
-
     if (!script || typeof script !== 'string') {
       throw new Error('Invalid script data');
     }
 
-    fs.writeFileSync(scriptPath, script);
+    // Create the temporary folder if it doesn't exist
+    if (!fs.existsSync(tempFolderPath)) {
+      fs.mkdirSync(tempFolderPath);
+      console.log(`Temporary folder ${tempFolderPath} created successfully.`);
+    }
 
-    exec(`powershell -File ${scriptPath}`, (error, stdout, stderr) => {
+    // Write the script file to the temporary folder
+    fs.writeFileSync(path.join(tempFolderPath, 'tempScript.ps1'), script);
+
+    // Execute the script
+    exec(`powershell -File ${path.join(tempFolderPath, 'tempScript.ps1')}`, (error, stdout, stderr) => {
       const output = stdout || stderr;
 
       console.log('Script execution output:', output);
 
+      // Send the output back to the client
       res.send(output);
-      fs.unlinkSync(scriptPath);
+
+      // Remove the script file from the temporary folder
+      fs.unlinkSync(path.join(tempFolderPath, 'tempScript.ps1'));
+
+      // If this was the last installation, remove the temporary folder
+      const filesInTempFolder = fs.readdirSync(tempFolderPath);
+      if (filesInTempFolder.length === 0) {
+        fs.rmdirSync(tempFolderPath);
+        console.log(`Temporary folder ${tempFolderPath} removed successfully.`);
+      }
     });
   } catch (error) {
-    console.error('Error writing script file:', error);
+    console.error('Error handling script:', error);
     res.status(500).send('Internal Server Error');
   }
 });
