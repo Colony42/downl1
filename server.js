@@ -51,7 +51,8 @@ app.post('/runScript', async (req, res) => {
     fs.writeFileSync(path.join(tempFolderPath, 'tempScript.ps1'), script);
 
     // Execute the script
-    exec(`powershell -File ${path.join(tempFolderPath, 'tempScript.ps1')}`, (error, stdout, stderr) => {
+    exec(`pwsh -File ${path.join(tempFolderPath, 'tempScript.ps1')}`, (error, stdout, stderr) => {
+
       const output = stdout || stderr;
 
       console.log('Script execution output:', output);
